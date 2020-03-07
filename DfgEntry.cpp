@@ -572,7 +572,7 @@ std::string getOperationStr(Instruction *Inst, bool isAcc, bool predicated) {
     BitWidth = Cmp->getOperand(0)->getType()->getScalarSizeInBits();
   } else if (auto Call = dyn_cast<CallInst>(Inst)) {
     assert(Call);
-    OpStr = Call->getCalledValue()->getName();
+    OpStr = Call->getCalledValue()->getName().str();
   } else {
     OpStr = Inst->getOpcodeName();
     if (isAcc) {
