@@ -22,7 +22,8 @@
 #include "llvm/Transforms/Utils/UnrollLoop.h"
 #include "llvm/Transforms/Utils/LoopUtils.h"
 #include "llvm/Transforms/Utils/Cloning.h"
-#include "DfgInfo.h"
+
+#include "Transformation.h"
 #include "Util.h"
 
 #include "ss-config/model.h"

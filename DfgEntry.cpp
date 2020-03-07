@@ -5,7 +5,7 @@
 
 #include "Util.h"
 #include "DfgEntry.h"
-#include "DfgInfo.h"
+#include "Transformation.h"
 
 #define DEBUG_TYPE "stream-specialize"
 
