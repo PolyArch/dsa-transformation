@@ -13,9 +13,9 @@
 #include "llvm/Transforms/Utils/UnrollLoop.h"
 
 #include "DfgEntry.h"
-#include "DfgInfo.h"
+#include "Transformation.h"
 #include "Util.h"
-#include "StreamSpecialize.h"
+#include "Pass.h"
 
 using namespace llvm;
 
