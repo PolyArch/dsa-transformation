@@ -976,7 +976,7 @@ void IndMemPort::InjectStreamIntrinsic(IRBuilder<> *IB) {
     int IBits = Cur->Index->Load->getType()->getScalarSizeInBits();
     int DBits = Cur->UnderlyingInst()->getType()->getScalarSizeInBits();
 
-    auto TImm = createConstant(Ctx, (TBits(IBits) << 2) | TBits(DBits));
+    auto TImm = createConstant(Ctx, (1 << 4) | (TBits(IBits) << 2) | TBits(DBits));
     createAssembleCall(VoidTy, "ss_cfg_ind $0, $1, $2", "r,r,i",
                        {createConstant(Ctx, 0), createConstant(Ctx, DBits / 8), TImm},
                        Parent->DefaultIP());

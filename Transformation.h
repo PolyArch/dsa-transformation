@@ -13,7 +13,7 @@
 #include "llvm/Support/Casting.h"
 #include "Util.h"
 #include "DfgEntry.h"
-#include "StreamSpecialize.h"
+#include "Pass.h"
 
 using namespace llvm;
 
@@ -54,7 +54,6 @@ public:
     DataMove
   };
 
-protected:
   /// DFG #ID in the .dfg file.
   int ID{-1};
   /// The DfgFile contains this Dfg
