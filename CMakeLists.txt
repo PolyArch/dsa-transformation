@@ -9,7 +9,7 @@ find_package(LLVM REQUIRED)
 target_include_directories(StreamSpecialize
   PRIVATE
   $ENV{SS_TOOLS}/include
-  $ENV{SS}/ss-llvm/include/llvm/)
+  $ENV{SS}/dsa-llvm-project/include/llvm/)
 
 link_directories($ENV{SS_TOOLS}/lib)
 
