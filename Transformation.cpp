@@ -26,9 +26,9 @@
 #include "Transformation.h"
 #include "Util.h"
 
-#include "ss-config/model.h"
-#include "ss-scheduler/scheduler.h"
-#include "ss-scheduler/scheduler_sa.h"
+#include "dsa/arch/model.h"
+#include "dsa/mapper/scheduler.h"
+#include "dsa/mapper/scheduler_sa.h"
 
 using namespace llvm;
 
@@ -314,7 +314,7 @@ Instruction *DfgBase::InjectRepeat(Value *Prime, Value *Wrapper, int64_t Stretch
   }
 }
 
-ssdfg::MetaPort::Data
+dsa::dfg::MetaPort::Data
 DfgBase::InjectStreamIntrin(int PortNum, std::string AsmStr,
                             const AnalyzedStream &Stream) {
 
@@ -332,7 +332,7 @@ DfgBase::InjectStreamIntrin(int PortNum, std::string AsmStr,
   Value *N = std::get<1>(Stream.Dimensions.back());
   Value *Port = createConstant(getCtx(), PortNum << 1);
 
-  ssdfg::MetaPort::Data Res = ssdfg::MetaPort::Data::Memory;
+  dsa::dfg::MetaPort::Data Res = dsa::dfg::MetaPort::Data::Memory;
   // FIXME: I am not sure if it is a good hack. I replace "dma" by "scr".
   //        I would like a more systemaic way to do it.
   if (Parent->AddrsOnSpad.count(Start)) {
@@ -341,7 +341,7 @@ DfgBase::InjectStreamIntrin(int PortNum, std::string AsmStr,
         AsmStr[i] = 's';
         AsmStr[i + 1] = 'c';
         AsmStr[i + 2] = 'r';
-        Res = ssdfg::MetaPort::Data::SPad;
+        Res = dsa::dfg::MetaPort::Data::SPad;
         break;
       }
     }

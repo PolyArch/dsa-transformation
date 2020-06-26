@@ -988,7 +988,7 @@ void IndMemPort::InjectStreamIntrinsic(IRBuilder<> *IB) {
     createAssembleCall(VoidTy, "ss_ind $0, $1, $2", "r,r,i",
                        {GEP->getOperand(0), Num, PortImm}, Parent->DefaultIP());
     // TODO: Support indirect read on the SPAD(?)
-    Cur->Meta.set("src", ssdfg::MetaPort::DataText[(int) ActualSrc]);
+    Cur->Meta.set("src", dsa::dfg::MetaPort::DataText[(int) ActualSrc]);
     Cur->Meta.set("dest", "memory");
     Cur->Meta.set("op", "indread");
 
@@ -1170,7 +1170,7 @@ void MemPort::InjectStreamIntrinsic(IRBuilder<> *IB) {
                        {IB->getInt64(((int) Fill))}, DFG->DefaultIP());
     DFG->InjectRepeat(Analyzed.AR);
     auto Src = DFG->InjectStreamIntrin(MP->SoftPortNum, "ss_dma_rd $0, $1, $2", Analyzed);
-    Meta.set("src", ssdfg::MetaPort::DataText[(int) Src]);
+    Meta.set("src", dsa::dfg::MetaPort::DataText[(int) Src]);
     Meta.set("op", "read");
     createAssembleCall(VoidTy, "ss_fill_mode t0, t0, $0", "i",
                        {IB->getInt64(((int) 0))}, DFG->DefaultIP());
@@ -1192,7 +1192,7 @@ void PortMem::InjectStreamIntrinsic(IRBuilder<> *IB) {
   if (!Analyzed.Dimensions.empty()) {
     auto Dst = DFG->InjectStreamIntrin(PM->SoftPortNum, "ss_wr_dma $0, $1, $2", Analyzed);
     Meta.set("op", "write");
-    Meta.set("dest", ssdfg::MetaPort::DataText[(int) Dst]);
+    Meta.set("dest", dsa::dfg::MetaPort::DataText[(int) Dst]);
   } else {
 
     auto &Ctx = Parent->getCtx();
@@ -1461,7 +1461,7 @@ void AtomicPortMem::InjectStreamIntrinsic(IRBuilder<> *IB) {
   auto TImm = IB->getInt64((TBits(DBits) << 4) | (TBits(DBits) << 2) | TBits(IBits));
   createAssembleCall(IB->getVoidTy(), "ss_cfg_atom_op t0, t0, $0", "i", {TImm},
                      Parent->DefaultIP());
-  Meta.set("src", ssdfg::MetaPort::DataText[(int) ActualSrc]);
+  Meta.set("src", dsa::dfg::MetaPort::DataText[(int) ActualSrc]);
   Meta.set("dest", "spad");
   Meta.set("op", "atomic");
   // FIXME: offset is not always 0
