@@ -3,12 +3,12 @@
 
 #include <set>
 
-#include <ss-scheduler/metadata.h>
-
 #include "llvm/ADT/SmallVector.h"
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/IRBuilder.h"
+
+#include "dsa/dfg/metadata.h"
 
 using namespace llvm;
 
@@ -177,7 +177,7 @@ struct Accumulator : ComputeBody {
 struct PortBase : DfgEntry {
   int SoftPortNum;
   bool IntrinInjected;
-  ssdfg::MetaPort Meta;
+  dsa::dfg::MetaPort Meta;
 
   virtual int PortWidth();
   PortBase(DfgBase *Parent_);
