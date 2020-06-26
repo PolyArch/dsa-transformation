@@ -151,7 +151,7 @@ public:
 
   /// Inject stream intrinsics
   /// Returns the actual data source, since it will implicitly transfer to SPAD
-  ssdfg::MetaPort::Data InjectStreamIntrin(int Port, std::string AsmStr,
+  dsa::dfg::MetaPort::Data InjectStreamIntrin(int Port, std::string AsmStr,
                                  const AnalyzedStream& Stream);
 
   /// Analyze data stream
