@@ -1236,11 +1236,14 @@ void DfgFile::EmitAndScheduleDfg() {
     //sa->setGap(0.1, 1.0);
     //Schedule *sched = sa->invoke(&model, &dfg, false);
     std::string Verbose = isCurrentDebugType(DEBUG_TYPE) ? "-v" : "";
-    if (Query->MF.EXTRACT)
+    if (Query->MF.EXTRACT) {
       Verbose += " --max-iters 1";
-    auto Cmd = formatv("ss_sched {0} {1} {2} 1>&2", Verbose, SBCONFIG, FileName);
+    }
+    auto Cmd = formatv("ss_sched {0} {1} {2} > /dev/null", Verbose, SBCONFIG, FileName);
     LLVM_DEBUG(dbgs() << Cmd);
-    assert(system(Cmd.str().c_str()) == 0);
+    if (system(Cmd.str().c_str()) != 0) {
+      // TODO(@were): throw exception here.
+    }
   }
 
 
@@ -1254,7 +1257,7 @@ void DfgFile::EmitAndScheduleDfg() {
   std::string Stripped(SCHEDULED ? NameOnly.substr(0, NameOnly.size() - 2) : FileName);
   while (Stripped.back() != '.') Stripped.pop_back();
   Stripped.pop_back();
-  errs() << "Stripped: " << Stripped << "\n";
+  LLVM_DEBUG(dbgs() << "Stripped: " << Stripped << "\n");
 
   int ConfigSize = 0;
   std::string ConfigString;
@@ -1272,7 +1275,9 @@ void DfgFile::EmitAndScheduleDfg() {
       if (Token.find(PortPrefix) == 0) {
         int X, Y;
         Token = Token.substr(PortPrefix.size(), Token.size());
-        assert(sscanf(Token.c_str(), "%d_v%d", &X, &Y) == 2);
+        if (sscanf(Token.c_str(), "%d_v%d", &X, &Y) != 2) {
+          // TODO(@were): throw exception here!
+        }
         int Port;
         iss >> Port;
         LLVM_DEBUG(dbgs() << "sub" << X << "v" << Y << " -> " << Port << "\n");
